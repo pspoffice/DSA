@@ -6,7 +6,9 @@ using namespace std;
 
 class Solution {
  public:
-  auto Solve() const -> int;
+  auto UpperBound() const -> int;
+
+  auto LowerBound() const -> int;
 
  public:
   auto Set() -> void;
@@ -26,25 +28,40 @@ auto Solution::Set() -> void {
   }
 }
 
-auto Solution::Solve() const -> int {
-  int index = 0;
+auto Solution::LowerBound() const -> int {
+  int position = size;
   int low = 0, high = size - 1;
   while (low <= high) {
-    index = (low + high) / 2;
-    if (x == v[index]) {
-      return index;
-    } else if (x > v[index]) {
+    int index = (low + high) / 2;
+    if (x <= v[index]) {
+      position = index;
+      high = index - 1;
+    } else {
+      low = index + 1;
+    }
+  }
+  return position;
+}
+
+auto Solution::UpperBound() const -> int {
+  int position = size;
+  int low = 0, high = size - 1;
+  while (low <= high) {
+    int index = (low + high) / 2;
+    if (x >= v[index]) {
       low = index + 1;
     } else {
+      position = index;
       high = index - 1;
     }
   }
-  return (x > v[index] ? ++index : index);
+  return position;
 }
 
 auto main() -> int {
   Solution S;
   S.Set();
-  cout << S.Solve() << endl;
+  cout << S.LowerBound() << endl;
+  cout << S.UpperBound() << endl;
   return 0;
 }
