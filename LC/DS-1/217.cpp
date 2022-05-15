@@ -27,7 +27,7 @@ auto Solution::Set() -> void {
 
 auto Solution::Solve() -> bool {
   Set();
-  unordered_map<int, int> a;
+  unordered_map<int, bool> a;
   for (size_t i = 0; i < v.size(); i++) {
     const int x = v[i];
     if (a[x]) {
